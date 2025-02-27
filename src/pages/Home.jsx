@@ -50,6 +50,7 @@ const  handleSearch = async (e) => {
     try{
       const searchResults = await searchMovies(searchQuery);
       setmovies(searchResults);
+      setError(null)
     }
     catch (err)
     {

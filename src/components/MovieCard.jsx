@@ -1,11 +1,15 @@
 import React from 'react'
 import "../css/MovieCard.css"
+import { useMovieContext } from '../contexts/MovieContext'
 // What specific things do we need to pass to this Component ? movie details such as image , or other details etc.
 // We will pass movie details as props to this component
 const MovieCard = ({ movie }) => {
-
-  function onFavouriteClick() {
-
+    const { isFavorite , addToFavorites , removeFromFavorites} = useMovieContext()
+    const favorite = isFavorite(movie.id)
+  function onFavouriteClick(e) {
+    e.preventDefault();
+    if (favorite) removeFromFavorites(movie.id)
+    else addToFavorites(movie)
   }
 
 
@@ -16,7 +20,7 @@ const MovieCard = ({ movie }) => {
       <div className="movie-poster">
         <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
         <div className="movie-overlay">
-          <button className="favourite-btn" onClick={onFavouriteClick}>
+          <button className={`favorite-btn ${favorite ? 'active' : ''}`} onClick={onFavouriteClick}>
             ♥
             {/* Alt + 3 */}
           </button>
